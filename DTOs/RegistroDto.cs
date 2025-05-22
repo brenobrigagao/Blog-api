@@ -3,7 +3,7 @@ namespace Blog.Dtos;
 using System.ComponentModel.DataAnnotations;
 using Blog.Models;
 
-public class CriarUsuario
+public class RegistroDto
 {
     [Required]
     public string Nome { get; set; } = string.Empty;
