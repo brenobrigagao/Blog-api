@@ -23,8 +23,8 @@ namespace Blog.Data
 
             modelBuilder.Entity<Post>()
             .HasOne(a => a.Autor)
-            .WithMany(p => p.Posts).
-            HasForeignKey(p => p.AutorId);
+            .WithMany(p => p.Posts)
+            .HasForeignKey(p => p.AutorId);
 
             modelBuilder.Entity<Comentario>()
             .HasOne(p => p.Post)

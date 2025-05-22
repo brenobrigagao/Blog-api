@@ -3982,19 +3982,19 @@
     ]
   },
   "packageFolders": {
-    "/home/breno/.nuget/packages/": {}
+    "C:\\Users\\breno\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/breno/Área de Trabalho/BlogApi/BlogApi.csproj",
+      "projectUniqueName": "C:\\Users\\breno\\OneDrive\\Desktop\\Blog-api\\BlogApi.csproj",
       "projectName": "BlogApi",
-      "projectPath": "/home/breno/Área de Trabalho/BlogApi/BlogApi.csproj",
-      "packagesPath": "/home/breno/.nuget/packages/",
-      "outputPath": "/home/breno/Área de Trabalho/BlogApi/obj/",
+      "projectPath": "C:\\Users\\breno\\OneDrive\\Desktop\\Blog-api\\BlogApi.csproj",
+      "packagesPath": "C:\\Users\\breno\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\breno\\OneDrive\\Desktop\\Blog-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/breno/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\breno\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4073,7 +4073,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.409/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
