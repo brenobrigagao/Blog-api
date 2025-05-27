@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Blog.Dtos;
 
 public class PostDTO
