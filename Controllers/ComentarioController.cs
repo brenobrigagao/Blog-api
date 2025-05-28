@@ -3,6 +3,8 @@ using Blog.Models;
 using Blog.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Blog.Controllers;
 
@@ -31,6 +33,7 @@ public class ComentarioController : ControllerBase
         }).ToListAsync();
         return Ok(comentarios);
     }
+    [Authorize]
     [HttpPost("fazer-comentario")]
     public async Task<IActionResult> Comentar([FromBody] ComentarDto dto)
     {
@@ -51,13 +54,29 @@ public class ComentarioController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(new { message = "Comentario criado com sucesso!", comentario.Id });
     }
+    [Authorize]
     [HttpPut("editar-comentario/{id}")]
     public async Task<IActionResult> Editar(int id, [FromBody] EditarComentarioDto dto)
     {
         var comentario = await _context.Comentarios.FindAsync(id);
         if (comentario == null) return NotFound("Esse comentário não existe!");
+        var usuarioId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        if (comentario.UsuarioId != usuarioId) return Forbid("Você não tem permissão para editar esse comentario.");
         comentario.Texto = dto.Texto;
         await _context.SaveChangesAsync();
-        return Ok("Comentario editado com sucesso");
+        return Ok(new { message = "Comentario editado com sucesso" });
     }
+    [Authorize]
+    [HttpDelete("excluir-comentario/{id}")]
+    public async Task<IActionResult> ApagarComentario(int id)
+    {
+        var comentario = await _context.Comentarios.FindAsync(id);
+        if (comentario == null) return NotFound("O comentario não existe!");
+        var usuarioId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        if (comentario.UsuarioId != usuarioId) return Forbid("Você não tem permissão de apagar esse comentario.");
+        _context.Comentarios.Remove(comentario);
+        await _context.SaveChangesAsync();
+        return Ok(new { message = "Comentario apagado com sucesso!" });
+    }
+    
 }
