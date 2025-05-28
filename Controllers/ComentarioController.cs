@@ -78,5 +78,21 @@ public class ComentarioController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(new { message = "Comentario apagado com sucesso!" });
     }
-    
+    [HttpGet("comentarios-post/{PostId}")]
+    public async Task<IActionResult> ComentariosDoPost(int PostId)
+    {
+        var comentarios = await _context.Comentarios
+        .Where(c => c.PostId == PostId)
+        .Include(c => c.Usuario)
+        .Include(c => c.Post)
+        .Select(c => new ComentarioDto
+        {
+            Id = c.Id,
+            Texto = c.Texto,
+            DataCriacao = c.dataCriacao,
+            AutorNome = c.Usuario.Nome,
+            PostNome = c.Post.Titulo
+        }).ToListAsync();
+        return Ok(comentarios);
+    }
 }
