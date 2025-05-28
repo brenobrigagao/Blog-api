@@ -50,7 +50,14 @@ public class ComentarioController : ControllerBase
         _context.Comentarios.Add(comentario);
         await _context.SaveChangesAsync();
         return Ok(new { message = "Comentario criado com sucesso!", comentario.Id });
-    
-
+    }
+    [HttpPut("editar-comentario/{id}")]
+    public async Task<IActionResult> Editar(int id, [FromBody] EditarComentarioDto dto)
+    {
+        var comentario = await _context.Comentarios.FindAsync(id);
+        if (comentario == null) return NotFound("Esse comentário não existe!");
+        comentario.Texto = dto.Texto;
+        await _context.SaveChangesAsync();
+        return Ok("Comentario editado com sucesso");
     }
 }
