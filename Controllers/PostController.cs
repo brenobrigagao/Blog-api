@@ -17,10 +17,15 @@ public class PostController : ControllerBase
     }
 
     [HttpGet("listar-posts")]
-    public async Task<IActionResult> Listar()
+    public async Task<IActionResult> Listar([FromQuery] string? categoria)
     {
-        var posts = await _context.Posts
-        .Include(a => a.Autor)
+        var query = _context.Posts.Include(p => p.Autor).AsQueryable();
+        if (!string.IsNullOrEmpty(categoria) &&
+        Enum.TryParse<Categoria>(categoria, ignoreCase: true, out var categoriaEnum))
+        {
+            query = query.Where(p => p.Categoria == categoriaEnum);
+        }
+        var posts = await query
         .Select(p => new PostDTO
         {
             Id = p.Id,
@@ -42,7 +47,8 @@ public class PostController : ControllerBase
             Titulo = dto.Titulo,
             Conteudo = dto.Conteudo,
             AutorId = userId,
-            DataCriacao = DateTime.UtcNow
+            DataCriacao = DateTime.UtcNow,
+            Categoria = dto.Categoria
         };
         _context.Posts.Add(post);
         await _context.SaveChangesAsync();
