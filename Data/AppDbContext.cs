@@ -12,6 +12,8 @@ namespace Blog.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
+        public DbSet<ComentarioLike> ComentarioLikes{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,8 +37,23 @@ namespace Blog.Data
             .HasOne(u => u.Usuario)
             .WithMany(c => c.Comentarios)
             .HasForeignKey(u => u.UsuarioId);
+            modelBuilder.Entity<PostLike>()
+            .HasOne(pl => pl.Post)
+            .WithMany(p => p.Likes)
+            .HasForeignKey(pl => pl.PostId);
+            modelBuilder.Entity<PostLike>()
+            .HasOne(pl => pl.Usuario)
+            .WithMany(u => u.PostLikes)
+            .HasForeignKey(pl => pl.UsuarioId);
+            modelBuilder.Entity<ComentarioLike>()
+            .HasOne(cl => cl.Comentario)
+            .WithMany(c => c.Likes)
+            .HasForeignKey(cl => cl.ComentarioId);
 
-    
+            modelBuilder.Entity<ComentarioLike>()
+            .HasOne(cl => cl.Usuario)
+            .WithMany(u => u.ComentarioLikes)
+            .HasForeignKey(cl => cl.UsuarioId);
         }
     }
 }
