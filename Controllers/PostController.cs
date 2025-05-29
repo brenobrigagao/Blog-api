@@ -98,4 +98,19 @@ public class PostController : ControllerBase
 
         return Ok(post);
     }
+    [Authorize(Roles = "Autor")]
+    [HttpGet("meus-posts")]
+    public async Task<IActionResult> MeusPosts()
+    {
+        var usuarioId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+        var posts = await _context.Posts.Where(p => p.AutorId == usuarioId)
+        .Select(p => new PostDTO
+        {
+            Titulo = p.Titulo,
+            Conteudo = p.Conteudo,
+            AutorNome = p.Autor.Nome,
+            DataCriacao = p.DataCriacao
+        }).ToListAsync();
+        return Ok(posts);
+    }
 }
