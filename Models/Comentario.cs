@@ -11,4 +11,5 @@ public class Comentario
 
     public int UsuarioId { get; set; }
     public Usuario? Usuario { get; set; }
+    public List<ComentarioLike> Likes { get; set; } = new List<ComentarioLike>();
 }

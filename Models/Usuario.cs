@@ -18,6 +18,9 @@ public class Usuario
 
     public ICollection<Post> Posts { get; set; } = new List<Post>();
     public ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
+    public List<PostLike> PostLikes { get; set; } = new List<PostLike>();
+    public List<ComentarioLike> ComentarioLikes { get; set; } = new List<ComentarioLike>();
+
     
 
 }

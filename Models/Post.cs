@@ -12,5 +12,6 @@ public class Post
     public Usuario? Autor { get; set; }
     public ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
     public int ComentarioId { get; set; }
+    public List<PostLike> Likes { get; set; } = new List<PostLike>();
 
 }

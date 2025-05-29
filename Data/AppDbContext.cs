@@ -35,6 +35,8 @@ namespace Blog.Data
             .HasOne(u => u.Usuario)
             .WithMany(c => c.Comentarios)
             .HasForeignKey(u => u.UsuarioId);
+
+    
         }
     }
 }
