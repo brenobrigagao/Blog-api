@@ -21,6 +21,14 @@ namespace Blog.Data
                 .Property(u => u.Role)
                 .HasConversion<string>();
 
+            modelBuilder.Entity<PostLike>()
+            .HasIndex(pl => new { pl.PostId, pl.UsuarioId })
+            .IsUnique();
+
+            modelBuilder.Entity<ComentarioLike>()
+            .HasIndex(cl => new { cl.ComentarioId, cl.UsuarioId })
+            .IsUnique();
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Post>()
