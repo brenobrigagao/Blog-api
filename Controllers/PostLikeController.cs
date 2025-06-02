@@ -36,6 +36,20 @@ public class PostLikeController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok("Post curtido com sucesso!");
+    }
 
+    [HttpDelete("{postId}")]
+    [Authorize]
+    public async Task<IActionResult> RetirarCurtida(int postId)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+        var like = await _context.PostLikes.FirstOrDefaultAsync(pl => pl.PostId == postId && pl.UsuarioId == userId);
+        if (like == null)
+        {
+            return NotFound("Like não encontrado");
+        }
+        _context.PostLikes.Remove(like);
+        await _context.SaveChangesAsync();
+        return Ok("Like removido com sucesso!");
     }
 }
