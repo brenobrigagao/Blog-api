@@ -35,7 +35,7 @@ public class PostController : ControllerBase
             DataCriacao = p.DataCriacao,
             QuantidadeLike = p.Likes.Count
 
-        }).ToListAsync();   
+        }).OrderByDescending(p => p.DataCriacao).ToListAsync();
         return Ok(posts);
     }
     [Authorize(Roles = "Autor")]
