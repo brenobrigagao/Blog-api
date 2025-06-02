@@ -32,15 +32,20 @@ public class PostController : ControllerBase
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
             AutorNome = p.Autor.Nome,
-            DataCriacao = p.DataCriacao
+            DataCriacao = p.DataCriacao,
+            QuantidadeLike = p.Likes.Count
 
-        }).ToListAsync();
+        }).ToListAsync();   
         return Ok(posts);
     }
     [Authorize(Roles = "Autor")]
     [HttpPost("criar-post")]
     public async Task<IActionResult> CriarPost([FromBody] CriarPostDto dto)
     {
+        if (dto == null)
+        {
+            return BadRequest("Dados inválidos!");
+        }
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
         var post = new Post
         {
@@ -58,6 +63,10 @@ public class PostController : ControllerBase
     [HttpPut("editar-post/{id}")]
     public async Task<IActionResult> EditarPost(int id, [FromBody] CriarPostDto dto)
     {
+        if (dto == null)
+        {
+            return BadRequest("Dados inválidos!");
+        }
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
         var post = await _context.Posts.FindAsync(id);
 
@@ -106,11 +115,13 @@ public class PostController : ControllerBase
         var posts = await _context.Posts.Where(p => p.AutorId == usuarioId)
         .Select(p => new PostDTO
         {
+            Id = p.Id,
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
             AutorNome = p.Autor.Nome,
             DataCriacao = p.DataCriacao
         }).ToListAsync();
+
         return Ok(posts);
     }
 }

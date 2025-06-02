@@ -9,4 +9,5 @@ public class PostDTO
     public string Conteudo { get; set; } = string.Empty;
     public string AutorNome { get; set; } = string.Empty;
     public DateTime DataCriacao { get; set; }
+    public int QuantidadeLike { get; set; }
 }
