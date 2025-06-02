@@ -19,21 +19,24 @@ public class PostController : ControllerBase
     [HttpGet("listar-posts")]
     public async Task<IActionResult> Listar([FromQuery] string? categoria)
     {
-        var query = _context.Posts.Include(p => p.Autor).AsQueryable();
+        var query = _context.Posts
+        .Include(p => p.Autor)
+        .Include(p => p.Likes)
+        .AsQueryable();
         if (!string.IsNullOrEmpty(categoria) &&
         Enum.TryParse<Categoria>(categoria, ignoreCase: true, out var categoriaEnum))
         {
             query = query.Where(p => p.Categoria == categoriaEnum);
         }
         var posts = await query
-        .Select(p => new PostDTO
+        .Select(p => new PostDTO    
         {
             Id = p.Id,
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
             AutorNome = p.Autor.Nome,
             DataCriacao = p.DataCriacao,
-            QuantidadeLike = p.Likes.Count
+            QuantidadeLike = p.Likes.Count  
 
         }).OrderByDescending(p => p.DataCriacao).ToListAsync();
         return Ok(posts);
@@ -101,7 +104,8 @@ public class PostController : ControllerBase
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
             AutorNome = p.Autor.Nome,
-            DataCriacao = p.DataCriacao
+            DataCriacao = p.DataCriacao,
+            QuantidadeLike = p.Likes.Count
         }).FirstOrDefaultAsync();
         if (post == null) return NotFound("O post não foi encontrado!");
 
@@ -119,7 +123,8 @@ public class PostController : ControllerBase
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
             AutorNome = p.Autor.Nome,
-            DataCriacao = p.DataCriacao
+            DataCriacao = p.DataCriacao,
+            QuantidadeLike = p.Likes.Count
         }).ToListAsync();
 
         return Ok(posts);
