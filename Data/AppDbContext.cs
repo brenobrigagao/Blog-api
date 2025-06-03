@@ -14,6 +14,7 @@ namespace Blog.Data
         public DbSet<Comentario> Comentarios { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<ComentarioLike> ComentarioLikes{ get; set; }
+        public DbSet<Seguidor> Seguidores { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,9 @@ namespace Blog.Data
             modelBuilder.Entity<ComentarioLike>()
             .HasIndex(cl => new { cl.ComentarioId, cl.UsuarioId })
             .IsUnique();
+
+            modelBuilder.Entity<Seguidor>()
+            .HasKey(s => new { s.SeguidorId, s.SeguidoId });
 
             base.OnModelCreating(modelBuilder);
 
@@ -45,23 +49,33 @@ namespace Blog.Data
             .HasOne(u => u.Usuario)
             .WithMany(c => c.Comentarios)
             .HasForeignKey(u => u.UsuarioId);
+
             modelBuilder.Entity<PostLike>()
             .HasOne(pl => pl.Post)
             .WithMany(p => p.Likes)
             .HasForeignKey(pl => pl.PostId);
+
             modelBuilder.Entity<PostLike>()
             .HasOne(pl => pl.Usuario)
             .WithMany(u => u.PostLikes)
             .HasForeignKey(pl => pl.UsuarioId);
+
             modelBuilder.Entity<ComentarioLike>()
             .HasOne(cl => cl.Comentario)
             .WithMany(c => c.Likes)
             .HasForeignKey(cl => cl.ComentarioId);
 
-            modelBuilder.Entity<ComentarioLike>()
-            .HasOne(cl => cl.Usuario)
-            .WithMany(u => u.ComentarioLikes)
-            .HasForeignKey(cl => cl.UsuarioId);
+            modelBuilder.Entity<Seguidor>()
+            .HasOne(s => s.UsuarioQueSegue)
+            .WithMany(u => u.Seguindo)
+            .HasForeignKey(s => s.SeguidorId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Seguidor>()
+            .HasOne(s => s.UsuarioSendoSeguido)
+            .WithMany(u => u.Seguidores)
+            .HasForeignKey(s => s.SeguidoId)
+            .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
