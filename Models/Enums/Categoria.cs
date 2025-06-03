@@ -1,4 +1,4 @@
-namespace Blog.Models
+namespace Blog.Models.Enums
 {
     public enum Categoria
     {

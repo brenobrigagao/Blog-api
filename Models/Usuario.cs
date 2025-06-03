@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Blog.Models.Enums;
 
 namespace Blog.Models;
 
@@ -20,6 +21,8 @@ public class Usuario
     public ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
     public List<PostLike> PostLikes { get; set; } = new List<PostLike>();
     public List<ComentarioLike> ComentarioLikes { get; set; } = new List<ComentarioLike>();
+    public ICollection<Seguidor>? Seguindo { get; set; }
+    public ICollection<Seguidor>? Seguidores { get; set; }
 
     
 

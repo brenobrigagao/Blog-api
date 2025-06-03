@@ -1,5 +1,6 @@
 namespace Blog.Models;
 
+using Blog.Models.Enums;
 public class Post
 {
     public int Id { get; set; }
