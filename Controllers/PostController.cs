@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Blog.Data;
 using Blog.Dtos;
+using Blog.Models.Enums;
 using Blog.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ public class PostController : ControllerBase
             Id = p.Id,
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
-            AutorNome = p.Autor.Nome,
+            AutorNome = p.Autor!.Nome,
             DataCriacao = p.DataCriacao,
             QuantidadeLike = p.Likes.Count  
 
@@ -103,7 +104,7 @@ public class PostController : ControllerBase
             Id = p.Id,
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
-            AutorNome = p.Autor.Nome,
+            AutorNome = p.Autor!.Nome,
             DataCriacao = p.DataCriacao,
             QuantidadeLike = p.Likes.Count
         }).FirstOrDefaultAsync();
@@ -122,7 +123,7 @@ public class PostController : ControllerBase
             Id = p.Id,
             Titulo = p.Titulo,
             Conteudo = p.Conteudo,
-            AutorNome = p.Autor.Nome,
+            AutorNome = p.Autor!.Nome,
             DataCriacao = p.DataCriacao,
             QuantidadeLike = p.Likes.Count
         }).ToListAsync();

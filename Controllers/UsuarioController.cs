@@ -28,8 +28,8 @@ public class UsuarioController : ControllerBase
 
         var seguir = new Seguidor
         {
-            SeguidorId = userId,
-            SeguidoId = id
+            UsuarioSeguidorId = userId,
+            UsuarioSeguidoId = id
         };
 
         _context.Seguidores.Add(seguir);
@@ -55,12 +55,12 @@ public class UsuarioController : ControllerBase
     public async Task<IActionResult> VerSeguidos(int id)
     {
         var seguindo = await _context.Seguidores
-        .Where(s => s.SeguidorId == id)
-        .Include(s => s.UsuarioSendoSeguido)
+        .Where(s => s.UsuarioSeguidorId == id)
+        .Include(s => s.UsuarioSeguido)
         .Select(s => new
         {
-            s.SeguidoId,
-            Nome = s.UsuarioSendoSeguido!.Nome
+            s.UsuarioSeguidoId,
+            Nome = s.UsuarioSeguido!.Nome
         }).ToListAsync();
 
         return Ok(seguindo);
@@ -71,12 +71,12 @@ public class UsuarioController : ControllerBase
     public async Task<IActionResult> VerSeguidores(int id)
     {
         var seguidor = await _context.Seguidores
-        .Where(s => s.SeguidoId == id)
-        .Include(s => s.UsuarioQueSegue)
+        .Where(s => s.UsuarioSeguidoId == id)
+        .Include(s => s.UsuarioSeguidor)
         .Select(s => new
         {
-            s.SeguidorId,
-            Nome = s.UsuarioQueSegue!.Nome
+            s.UsuarioSeguidorId,
+            Nome = s.UsuarioSeguidor!.Nome
         }).ToListAsync();
         return Ok(seguidor);
     }

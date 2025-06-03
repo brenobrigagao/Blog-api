@@ -31,7 +31,7 @@ namespace Blog.Data
             .IsUnique();
 
             modelBuilder.Entity<Seguidor>()
-            .HasKey(s => new { s.SeguidorId, s.SeguidoId });
+            .HasKey(s => new { s.UsuarioSeguidorId, s.UsuarioSeguidoId });
 
             base.OnModelCreating(modelBuilder);
 
@@ -66,15 +66,15 @@ namespace Blog.Data
             .HasForeignKey(cl => cl.ComentarioId);
 
             modelBuilder.Entity<Seguidor>()
-            .HasOne(s => s.UsuarioQueSegue)
+            .HasOne(s => s.UsuarioSeguidor)
             .WithMany(u => u.Seguindo)
-            .HasForeignKey(s => s.SeguidorId)
+            .HasForeignKey(s => s.UsuarioSeguidorId)
             .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Seguidor>()
-            .HasOne(s => s.UsuarioSendoSeguido)
+            .HasOne(s => s.UsuarioSeguido)
             .WithMany(u => u.Seguidores)
-            .HasForeignKey(s => s.SeguidoId)
+            .HasForeignKey(s => s.UsuarioSeguidoId)
             .OnDelete(DeleteBehavior.NoAction);
         }
     }

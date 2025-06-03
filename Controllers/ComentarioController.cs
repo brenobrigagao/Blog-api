@@ -30,8 +30,8 @@ public class ComentarioController : ControllerBase
             Id = p.Id,
             Texto = p.Texto,
             DataCriacao = p.dataCriacao,
-            AutorNome = p.Usuario.Nome,
-            PostNome = p.Post.Titulo,
+            AutorNome = p.Usuario!.Nome,
+            PostNome = p.Post!.Titulo,
             QuantidadeLikes = p.Likes.Count
         }).ToListAsync();
         return Ok(comentarios);
@@ -104,8 +104,8 @@ public class ComentarioController : ControllerBase
             Id = c.Id,
             Texto = c.Texto,
             DataCriacao = c.dataCriacao,
-            AutorNome = c.Usuario.Nome,
-            PostNome = c.Post.Titulo,
+            AutorNome = c.Usuario!.Nome,
+            PostNome = c.Post!.Titulo,
             QuantidadeLikes = c.Likes.Count
         }).ToListAsync();
         return Ok(comentarios);

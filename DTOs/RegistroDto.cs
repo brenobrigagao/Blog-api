@@ -1,7 +1,8 @@
 namespace Blog.Dtos;
 
 using System.ComponentModel.DataAnnotations;
-using Blog.Models;
+using Blog.Models.Enums;
+
 
 public class RegistroDto
 {

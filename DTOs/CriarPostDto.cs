@@ -1,8 +1,6 @@
-namespace Blog.Dtos;
-
 using System.ComponentModel.DataAnnotations;
-using Blog.Models;
-
+using Blog.Models.Enums;
+namespace Blog.Dtos;
 public class CriarPostDto
 {
     [Required]
